@@ -1,15 +1,11 @@
 package jpabook.jpashop.domain;
-
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.Item.Item;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.logging.log4j.util.Lazy;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -35,4 +31,10 @@ public class Category {
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
+
+    //==연관관계 메서드==//
+    public void addChildCategory(Category category) {
+        this.child.add(category);
+        category.setParent(this);
+    }
 }
